@@ -167,6 +167,7 @@ public class CommonDialog extends Dialog implements View.OnClickListener {
     public void refreshTime(){
         if (options.countDownTime != -1) {
             mHandler.removeCallbacksAndMessages(null);
+            if (timer != null) timer.cancel();
             mHandler.sendEmptyMessage(options.countDownTime);
         }
     }

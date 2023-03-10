@@ -1,4 +1,4 @@
-package com.linji.cabinet_file.widget
+package com.linji.cabinetutil.widget
 
 
 import android.annotation.SuppressLint
@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.linji.cabinetutil.R
 import com.linji.cabinetutil.bean.XCDropBean
 import com.linji.cabinetutil.util.ScreenUtil
@@ -137,7 +137,7 @@ class XCDropDownListView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     }
 
     internal inner class XCDropDownListAdapter(data: List<XCDropBean>?) :
-        BaseQuickAdapter<XCDropBean, BaseViewHolder>(R.layout.dropdown_list_item, data) {
+        BaseQuickAdapter<XCDropBean, BaseViewHolder>(R.layout.dropdown_list_item, data!!.toMutableList()) {
 
         override fun convert(helper: BaseViewHolder, item: XCDropBean) {
             helper.setText(R.id.tv, item.item)

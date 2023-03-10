@@ -3,6 +3,7 @@ package com.linji.cabinetutil.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.linji.cabinetutil.R;
 import com.linji.cabinetutil.util.ScreenUtil;
 
 import java.util.LinkedList;
@@ -78,30 +80,36 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
     public TitleBar(Context context) {
         super(context);
-        init(context);
+        init(context,null);
     }
 
     public TitleBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context,attrs);
     }
 
     public TitleBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+
+        init(context,attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context,AttributeSet attrs) {
         if (mImmersive) {
             mStatusBarHeight = getStatusBarHeight();
         }
         mActionPadding = dip2px(5);
         mOutPadding = dip2px(8);
         mHeight = dip2px(DEFAULT_TITLE_BAR_HEIGHT);
-        initView(context);
+        initView(context,attrs);
     }
 
-    private void initView(Context context) {
+    private void initView(Context context,AttributeSet attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
+        String left = ta.getString(R.styleable.TitleBar_left);
+        int left_size = ta.getDimensionPixelSize(R.styleable.TitleBar_left_size, DEFAULT_ACTION_TEXT_SIZE);
+        int leftColor = ta.getColor(R.styleable.TitleBar_left_color, Color.parseColor("#333333"));
+
         mLeftText = new TextView(context);
         mCenterLayout = new LinearLayout(context);
         mRightLayout = new LinearLayout(context);
@@ -109,14 +117,32 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
 
         LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
 
-        mLeftText.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
+        mLeftText.setTextSize(left_size);
         mLeftText.setSingleLine();
         mLeftText.setGravity(Gravity.CENTER_VERTICAL);
         mLeftText.setPadding(mOutPadding + mActionPadding, 0, mOutPadding, 0);
+        mLeftText.setText(left);
+        mLeftText.setTextColor(leftColor);
 
+        String title = ta.getString(R.styleable.TitleBar_title);
+        int title_size = ta.getDimensionPixelSize(R.styleable.TitleBar_title_size, DEFAULT_ACTION_TEXT_SIZE);
+        int titleColor = ta.getColor(R.styleable.TitleBar_title_color, Color.parseColor("#333333"));
+
+        String sub_title = ta.getString(R.styleable.TitleBar_sub_title);
+        int sub_title_size = ta.getDimensionPixelSize(R.styleable.TitleBar_sub_title_size, DEFAULT_ACTION_TEXT_SIZE);
+        int sub_titleColor = ta.getColor(R.styleable.TitleBar_sub_title_color, Color.parseColor("#333333"));
         mCenterText = new TextView(context);
         mSubTitleText = new TextView(context);
         mCenterImage = new ImageView(context);
+
+        mCenterText.setText(title);
+        mCenterText.setTextSize(title_size);
+        mCenterText.setTextColor(titleColor);
+
+        mSubTitleText.setText(sub_title);
+        mSubTitleText.setTextSize(sub_title_size);
+        mSubTitleText.setTextColor(sub_titleColor);
+
         mCenterLayout.addView(mCenterText);
         mCenterLayout.addView(mSubTitleText);
         mCenterLayout.addView(mCenterImage);
@@ -421,24 +447,6 @@ public class TitleBar extends ViewGroup implements View.OnClickListener {
             }
             view.setPadding(mActionPadding, mActionPadding * 2, mActionPadding, mOutPadding * 2);
         }
-//        if (TextUtils.isEmpty(action.getText())) {
-//            ImageView img = new ImageView(getContext());
-//            img.setImageDrawable(action.getDrawable());
-//            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//            img.setCropToPadding(true);
-//            view = img;
-//            view.setPadding(mActionPadding, mActionPadding*2, mActionPadding, mOutPadding*2);
-//        } else {
-//            TextView text = new TextView(getContext());
-//            text.setGravity(Gravity.CENTER);
-//            text.setText(action.getText());
-//            text.setTextSize(DEFAULT_ACTION_TEXT_SIZE);
-//            if (mActionTextColor != 0) {
-//                text.setTextColor(mActionTextColor);
-//            }
-//            view = text;
-//            view.setPadding(mActionPadding, 0, mActionPadding, 0);
-//        }
         view.setTag(action);
         view.setOnClickListener(this);
         return view;
