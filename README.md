@@ -7,6 +7,6 @@ allprojects {
 	}
 }
 dependencies {
-	implementation 'com.github.maxcine13:MyWidget:Tag'
+	implementation 'com.github.maxcine13:MyWidget:latest'
 }
 ```
