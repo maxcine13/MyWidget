@@ -1,12 +1,12 @@
 # MyWidget
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
-  dependencies {
-	        implementation 'com.github.maxcine13:MyWidget:Tag'
-	}
+}
+dependencies {
+	implementation 'com.github.maxcine13:MyWidget:Tag'
+}
 ```
