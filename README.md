@@ -1,4 +1,5 @@
 # MyWidget
+```
 allprojects {
 		repositories {
 			...
@@ -8,3 +9,4 @@ allprojects {
   dependencies {
 	        implementation 'com.github.maxcine13:MyWidget:Tag'
 	}
+```
